@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users
+  template:
+    metadata:
+      labels:
+        app: users
+  spec:
+    containers:
+      - name: users
+        image: sofianso/kube-demo-users:latest
+        env:
+          - env: AUTH_ADDRESS
+            value: localhost
+      - name: auth
+        image: sofianso/kube-demo-auth:latest
