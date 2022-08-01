@@ -9,7 +9,14 @@ const filePath = path.join(__dirname, process.env.TASKS_FOLDER, 'tasks.txt');
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use((req, res, next) => {
+    // The CORS block of code allows the application to communicate with the browser and vice versa 
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Access-Control-Allow-Credentials", "true");
+    response.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    response.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+    next();
+});
 
 const extractAndVerifyToken = async(headers) => {
     if (!headers.authorization) {
@@ -17,7 +24,7 @@ const extractAndVerifyToken = async(headers) => {
     }
     const token = headers.authorization.split(' ')[1]; // expects Bearer TOKEN
 
-    const response = await axios.get('http://${process.env.AUTH_ADDRESS}/verify-token/' + token);
+    const response = await axios.get('http://${process.env.TASKS_FOLDER}/verify-token/' + token);
     return response.data.uid;
 };
 
