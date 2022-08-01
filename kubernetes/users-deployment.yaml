@@ -17,4 +17,6 @@ spec:
         image: sofianso/kube-demo-users:latest
         env:
           - env: AUTH_ADDRESS
-            value: "10.xx.xxx.xxx"
+            # value: "10.xx.xxx.xxx"
+            # if the namespace isn't assigned then we use default
+            value: "auth-service.default"
