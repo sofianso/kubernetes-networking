@@ -5,64 +5,60 @@ import TaskList from './components/TaskList';
 import NewTask from './components/NewTask';
 
 function App() {
-    const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([]);
 
-    const fetchTasks = useCallback(function() {
-        // The URL will differ in your image
-        fetch('http://192.168.99.100:32140/tasks', {
-                headers: {
-                    'Authorization': 'Bearer abc',
-                },
-            })
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(jsonData) {
-                setTasks(jsonData.tasks);
-            });
-    }, []);
+  const fetchTasks = useCallback(function () {
+    // The URL will differ in your image
+    fetch('http://192.168.99.100:32140/tasks',  {
+      headers: {
+        'Authorization': 'Bearer abc',
+      },
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (jsonData) {
+        setTasks(jsonData.tasks);
+      });
+  }, []);
 
-    useEffect(
-        function() {
-            fetchTasks();
-        }, [fetchTasks]
-    );
+  useEffect(
+    function () {
+      fetchTasks();
+    },
+    [fetchTasks]
+  );
 
-    function addTaskHandler(task) {
-        // The URL will differ in your image
-        fetch('http://192.168.99.100:32140/tasks', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer abc',
-                },
-                body: JSON.stringify(task),
-            })
-            .then(function(response) {
-                console.log(response);
-                return response.json();
-            })
-            .then(function(resData) {
-                console.log(resData);
-            });
-    }
+  function addTaskHandler(task) {
+    // The URL will differ in your image
+    fetch('http://192.168.99.100:32140/tasks', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer abc',
+      },
+      body: JSON.stringify(task),
+    })
+      .then(function (response) {
+        console.log(response);
+        return response.json();
+      })
+      .then(function (resData) {
+        console.log(resData);
+      });
+  }
 
-    return ( <
-        div className = 'App' >
-        <
-        section >
-        <
-        NewTask onAddTask = { addTaskHandler }
-        />{' '} < /
-        section > <
-        section >
-        <
-        button onClick = { fetchTasks } > Fetch Tasks < /button> <
-        TaskList tasks = { tasks }
-        /> < /
-        section > <
-        /div>
-    );
+  return (
+    <div className='App'>
+      <section>
+        <NewTask onAddTask={addTaskHandler} />{' '}
+      </section>
+      <section>
+        <button onClick={fetchTasks}> Fetch Tasks </button>
+        <TaskList tasks={tasks} />
+      </section>
+    </div>
+  );
 }
 
 export default App;
