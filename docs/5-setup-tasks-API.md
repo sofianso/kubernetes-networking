@@ -25,4 +25,4 @@ Run the following command to obtain the URL in which you can POST/GET tasks usin
 Before you GET/POST any requests to TASKS
 
 You must set the `Authorization` in `Headers` to the value set in AUTH API to `Bearer abc` as shown below.
-![Postman Header](images/postman-header.png)
+![Postman Header](../images/postman-header.png)
