@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
 import './App.css';
 import TaskList from './components/TaskList';
@@ -7,60 +7,64 @@ import NewTask from './components/NewTask';
 function App() {
     const [tasks, setTasks] = useState([]);
 
-    const fetchTasks = useCallback(function() {
+    const fetchTasks = useCallback(function () {
         // The URL will differ in your image
-        fetch('http://192.168.99.100:32140/tasks', {
-                headers: {
-                    'Authorization': 'Bearer abc',
-                },
-            })
-            .then(function(response) {
+        fetch('/api/tasks', {
+            headers: {
+                'Authorization': 'Bearer abc',
+            },
+        })
+            .then(function (response) {
                 return response.json();
             })
-            .then(function(jsonData) {
+            .then(function (jsonData) {
                 setTasks(jsonData.tasks);
             });
     }, []);
 
     useEffect(
-        function() {
+        function () {
             fetchTasks();
         }, [fetchTasks]
     );
 
     function addTaskHandler(task) {
         // The URL will differ in your image
-        fetch('http://192.168.99.100:32140/tasks', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer abc',
-                },
-                body: JSON.stringify(task),
-            })
-            .then(function(response) {
+        fetch('/api/tasks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer abc',
+            },
+            body: JSON.stringify(task),
+        })
+            .then(function (response) {
                 console.log(response);
                 return response.json();
             })
-            .then(function(resData) {
+            .then(function (resData) {
                 console.log(resData);
             });
     }
 
-    return ( <
-        div className = 'App' >
+    return (<
+            div className='App'>
+            <
+                section>
+                <
+                    NewTask onAddTask={addTaskHandler}
+                />{' '} < /
+                section>
+            <
+                section>
+                <
+                    button onClick={fetchTasks}> Fetch Tasks
+                < /button>
+                <
+                    TaskList tasks={tasks}
+                />< /
+                section>
         <
-        section >
-        <
-        NewTask onAddTask = { addTaskHandler }
-        />{' '} < /
-        section > <
-        section >
-        <
-        button onClick = { fetchTasks } > Fetch Tasks < /button> <
-        TaskList tasks = { tasks }
-        /> < /
-        section > <
         /div>
     );
 }
