@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: users-service
+  name: auth-service
 spec:
   selector:
-    app: users
-  type: LoadBalancer
+    app: auth
+  type: ClusterIP
   ports:
     - protocol: TCP
-      port: 8080
+      port: 80
       targetPort: 8080
